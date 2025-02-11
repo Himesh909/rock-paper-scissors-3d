@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+      @apply bg-[#0a0a0f] text-white;
+    }
+  }
+  
+  @layer components {
+    .cyberpunk-border {
+      @apply border border-purple-500/30 rounded-2xl;
+    }
+    
+    .cyberpunk-panel {
+      @apply bg-black/40 backdrop-blur-sm cyberpunk-border;
+    }
+    
+    .neon-text {
+      @apply text-purple-400;
+    }
+  }
+  
+  @layer utilities {
+    .animate-gradient-x {
+      animation: gradient-x 15s linear infinite;
+    }
+  
+    @keyframes gradient-x {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  }

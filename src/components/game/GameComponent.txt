@@ -129,8 +129,7 @@ export default function GameComponent() {
     if (phase !== "ended") {
       nextRound();
       window.localStorage.setItem("round", String(Number(round) + 1));
-      const computerOption =
-        options[Math.floor(Math.random() * options.length)];
+      const computerOption = options[Math.floor(Math.random() * options.length)];
 
       setPlayer(option);
       setComputer(computerOption);
@@ -235,8 +234,7 @@ export default function GameComponent() {
       window.localStorage.setItem("playerWinsTotal", 0);
     }
 
-    let storedComputerWinsTotal =
-      window.localStorage.getItem("computerWinsTotal");
+    let storedComputerWinsTotal = window.localStorage.getItem("computerWinsTotal");
     if (storedComputerWinsTotal !== null) {
       setComputerWinsTotal(storedComputerWinsTotal);
     } else {
@@ -246,7 +244,7 @@ export default function GameComponent() {
 
   return (
     <div className="flex-1 w-full h-full">
-      <Canvas
+        <Canvas
         className="w-full h-[calc(100vh-16rem)]"
         camera={{
           near: 0.1,
@@ -257,7 +255,7 @@ export default function GameComponent() {
         <OrbitControls enableZoom={false} enablePan={false} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
-
+        
         <Rock
           ref={rock}
           position={[-2, -2.35, 0]}
@@ -282,7 +280,7 @@ export default function GameComponent() {
           onPointerOver={handleHover}
           onPointerOut={handleUnhover}
         />
-
+        
         <Float rotationIntensity={1} floatIntensity={0.25}>
           {computer && (
             <Text
@@ -293,7 +291,11 @@ export default function GameComponent() {
             >
               Computer chose {computer}
               {computer === "rock" && (
-                <Rock ref={rock} position={[3, 0, 0]} scale={[5, 5, 5]} />
+                <Rock
+                  ref={rock}
+                  position={[3, 0, 0]}
+                  scale={[5, 5, 5]}
+                />
               )}
               {computer === "paper" && (
                 <Paper
@@ -311,7 +313,7 @@ export default function GameComponent() {
               )}
             </Text>
           )}
-
+          
           {player && (
             <Text
               position={[0, 2.5, 0]}
@@ -321,7 +323,11 @@ export default function GameComponent() {
             >
               You chose {player}
               {player === "rock" && (
-                <Rock ref={rock} position={[3, 0, 0]} scale={[5, 5, 5]} />
+                <Rock
+                  ref={rock}
+                  position={[3, 0, 0]}
+                  scale={[5, 5, 5]}
+                />
               )}
               {player === "paper" && (
                 <Paper
@@ -339,7 +345,7 @@ export default function GameComponent() {
               )}
             </Text>
           )}
-
+          
           {winner && (
             <Text
               position={[0, 1, 0]}
@@ -354,7 +360,7 @@ export default function GameComponent() {
                 : `Computer wins${phase !== "ended" ? "!" : ""}`}
             </Text>
           )}
-
+          
           {phase === "ended" && (
             <>
               <Text
@@ -371,8 +377,7 @@ export default function GameComponent() {
                 font="./fonts/nickname.otf"
                 color={0x9f7aea}
               >
-                (You have won {playerWinsTotal} games in total and computer has
-                won {computerWinsTotal})
+                (You have won {playerWinsTotal} games in total and computer has won {computerWinsTotal})
               </Text>
               <Image
                 url="./icons/replay.png"

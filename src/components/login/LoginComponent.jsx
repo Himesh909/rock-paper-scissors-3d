@@ -10,7 +10,7 @@ import {
   Package,
 } from "lucide-react";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL; // Backend URL
+const BACKEND_URL = "http://localhost:5000/login"; // Backend URL
 
 export default function LoginComponent() {
   const [walletAddress, setWalletAddress] = useState(

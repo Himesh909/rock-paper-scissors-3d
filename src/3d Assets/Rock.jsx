@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
 export const Rock = forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF("./models/rock.glb");
+  const { nodes, materials } = useGLTF("https://igodhackerr.github.io/assets/rock.glb");
 
   const rock = useRef();
 
@@ -28,4 +28,4 @@ export const Rock = forwardRef((props, ref) => {
   );
 });
 
-useGLTF.preload("./models/rock.glb");
+useGLTF.preload("https://igodhackerr.github.io/assets/rock.glb");

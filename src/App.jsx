@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Admin, Game, GameData, Login } from "./pages";
-import notFoundImage from "../public/assets/404.png";
 import BurnNFT from "./nft/BurnNFT";
 import Inventory from "./components/Inventory";
 import Leaderbord from "./components/Leaderbord";
 import Shop from "./components/Shop";
+
+const notFoundImage = "https://raw.githubusercontent.com/Himesh909/rock-paper-scissors-3d/refs/heads/main/public/assets/404.png"
 
 const App = () => {
   return (

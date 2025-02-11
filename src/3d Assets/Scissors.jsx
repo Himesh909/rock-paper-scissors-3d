@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
 export const Scissors = forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF("./models/scissors.glb");
+  const { nodes, materials } = useGLTF("https://igodhackerr.github.io/assets/scissors.glb");
 
   const scissors = useRef();
 
@@ -38,4 +38,4 @@ export const Scissors = forwardRef((props, ref) => {
   );
 });
 
-useGLTF.preload("./models/scissors.glb");
+useGLTF.preload("https://igodhackerr.github.io/assets/scissors.glb");

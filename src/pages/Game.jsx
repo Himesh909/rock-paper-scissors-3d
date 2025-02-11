@@ -1,10 +1,9 @@
 import React from "react";
-import { GameComponent, InterfaceComponent } from "../components";
+import { InterfaceComponent } from "../components";
 
 const Game = () => {
   return (
     <>
-      <GameComponent />
       <InterfaceComponent />
     </>
   );
