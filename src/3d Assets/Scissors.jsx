@@ -2,8 +2,10 @@ import { forwardRef, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
+var scissorModel = "https://igodhackerr.github.io/assets/scissors.glb";
+
 export const Scissors = forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF("https://igodhackerr.github.io/assets/scissors.glb");
+  const { nodes, materials } = useGLTF(scissorModel);
 
   const scissors = useRef();
 
@@ -38,4 +40,4 @@ export const Scissors = forwardRef((props, ref) => {
   );
 });
 
-useGLTF.preload("https://igodhackerr.github.io/assets/scissors.glb");
+useGLTF.preload(scissorModel);

@@ -6,7 +6,8 @@ import Inventory from "./components/Inventory";
 import Leaderbord from "./components/Leaderbord";
 import Shop from "./components/Shop";
 
-const notFoundImage = "https://raw.githubusercontent.com/Himesh909/rock-paper-scissors-3d/refs/heads/main/public/assets/404.png"
+const notFoundImage =
+  "https://raw.githubusercontent.com/Himesh909/rock-paper-scissors-3d/refs/heads/main/public/assets/404.png";
 
 const App = () => {
   return (
@@ -28,7 +29,7 @@ const App = () => {
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 bg-opacity-25">
+    <div className="flex flex-col items-center justify-center h-screen bg-white">
       <img
         src={notFoundImage}
         alt="404 Not Found"

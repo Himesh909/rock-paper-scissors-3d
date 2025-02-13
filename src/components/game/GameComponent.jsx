@@ -107,7 +107,7 @@ export default function GameComponent() {
           walletAddress,
         };
 
-        fetch(`${BACKEND_URL}/store-game-data`, {
+        fetch(`${BACKEND_URL}/login/store-game-data`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

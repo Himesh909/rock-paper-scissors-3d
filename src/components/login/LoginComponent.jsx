@@ -10,7 +10,8 @@ import {
   Package,
 } from "lucide-react";
 
-const BACKEND_URL = "http://localhost:5000/login"; // Backend URL
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL; // Backend URL
+const VITE_BACKEND_URL_LOGIN = import.meta.env.VITE_BACKEND_URL_LOGIN; // Backend URL
 
 export default function LoginComponent() {
   const [walletAddress, setWalletAddress] = useState(
@@ -68,7 +69,9 @@ export default function LoginComponent() {
 
   const checkUserExists = async (address) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/check-user/${address}`);
+      const response = await fetch(
+        `${BACKEND_URL}/login/check-user/${address}`
+      );
       const data = await response.json();
       if (response.ok && data.exists) {
         setUserExists(true);
@@ -136,7 +139,7 @@ export default function LoginComponent() {
     formData.append("profile_image", profileImage);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/login`, {
+      const response = await fetch(`${VITE_BACKEND_URL_LOGIN}/login`, {
         method: "POST",
         body: formData,
       });
@@ -195,7 +198,7 @@ export default function LoginComponent() {
           className=" max-w-md mx-auto"
         >
           <h1 className="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-blue bg-clip-text text-transparent">
-            CYBERVERSE
+            Crypto Quest
           </h1>
 
           <div className="">
@@ -300,10 +303,12 @@ export default function LoginComponent() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           className="w-full bg-gradient-to-r from-cyber-purple to-cyber-blue py-2 px-4 rounded-lg font-bold hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2"
-                          onClick={() => (window.location.href = "/admin")}
+                          onClick={() =>
+                            (window.location.href = "/leaderboard")
+                          }
                         >
                           <ShieldCheck className="w-5 h-5" />
-                          Admin Panel
+                          Leader Board
                         </motion.button>
 
                         <motion.button

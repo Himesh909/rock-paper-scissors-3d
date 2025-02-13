@@ -1,12 +1,25 @@
-
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
-export const Paper = forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF("https://igodhackerr.github.io/assets/paper.glb");
+let paperModel = "https://igodhackerr.github.io/assets/paper.glb";
 
+export const Paper = forwardRef((props, ref) => {
   const paper = useRef();
+
+  useEffect(() => {
+    const selectedSkin = localStorage.getItem("selectedSkin");
+    switch (selectedSkin) {
+      case "neon":
+        paperModel = "./models/paper2.glb";
+        break;
+      case "default":
+        paperModel = "https://igodhackerr.github.io/assets/paper.glb";
+        break;
+    }
+  }, [localStorage.getItem("selectedSkin")]);
+
+  const { nodes, materials } = useGLTF(paperModel);
 
   useFrame((state, delta) => {
     paper.current.rotation.y += delta * 0.25;
@@ -26,4 +39,4 @@ export const Paper = forwardRef((props, ref) => {
   );
 });
 
-useGLTF.preload("https://igodhackerr.github.io/assets/paper.glb");
+useGLTF.preload(paperModel);

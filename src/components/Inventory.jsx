@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Cuboid as Cube, Wallet, RefreshCw } from "lucide-react";
 
-export default function Inventory() {
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+function Inventory() {
   const [walletAddress, setWalletAddress] = useState("");
   const [assets, setAssets] = useState([]);
   const [error, setError] = useState("");
@@ -14,7 +17,6 @@ export default function Inventory() {
     }
   }, []);
 
-  // Function to fetch assets from the Flask backend
   const fetchAssets = async () => {
     if (!walletAddress) {
       setError("Wallet address is required");
@@ -25,12 +27,9 @@ export default function Inventory() {
     setError("");
 
     try {
-      const response = await axios.post(
-        "https://api.cryptoquest.studio/invt/fetch-assets",
-        {
-          walletAddress: walletAddress,
-        }
-      );
+      const response = await axios.post(`${BACKEND_URL}/invt/fetch-assets`, {
+        walletAddress: walletAddress,
+      });
 
       if (response.data.assets) {
         setAssets(response.data.assets);
@@ -46,59 +45,93 @@ export default function Inventory() {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      {/* <div className="bg-gray-100 bg-opacity-25 p-4 rounded-lg shadow-md max-w-md"></div> */}
-      <div className="bg-gray-100 bg-opacity-25 rounded-lg shadow-md w-[400px] mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Player Inventory
-        </h1>
-        <div className="mb-6">
-          <div className="flex gap-4 justify-center">
-            <button
-              onClick={fetchAssets}
-              className="w-full px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
-            >
-              Fetch Assets
-            </button>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-[#0f1729] to-black text-gray-100 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center gap-3">
+            <Cube className="w-8 h-8 text-cyan-400" />
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text">
+              Digital Vault
+            </h1>
           </div>
+          <button
+            onClick={fetchAssets}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-cyan-500/20"
+          >
+            <RefreshCw className="w-5 h-5" />
+            <span>Sync Assets</span>
+          </button>
         </div>
 
+        {/* Status Messages */}
         {loading && (
-          <p className="text-center text-lg text-gray-500">Loading...</p>
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-cyan-500"></div>
+            <p className="text-cyan-400">Synchronizing blockchain data...</p>
+          </div>
         )}
-        {error && <p className="text-center text-red-500 text-lg">{error}</p>}
+        {error && (
+          <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 mb-8">
+            <p className="text-red-400">{error}</p>
+          </div>
+        )}
 
+        {/* Assets Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {assets.length > 0 ? (
             assets.map((asset, index) => (
               <div
                 key={index}
-                className="border border-gray-200 rounded-lg shadow-sm p-4 hover:shadow-md transition"
+                className="group relative bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all duration-300"
               >
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <img
                   src={asset.image}
                   alt={asset.name}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
+                  className="w-full h-48 object-cover"
                 />
-                <h2 className="text-xl font-semibold mb-2">{asset.name}</h2>
-                <p className="text-sm text-gray-600 mb-2">
-                  {asset.description}
-                </p>
-                <p className="text-sm text-gray-700">
-                  <strong>Token ID:</strong> {asset.token_id}
-                </p>
-                <p className="text-sm text-gray-700">
-                  <strong>Contract:</strong> {asset.contract_address}
-                </p>
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-white mb-2">
+                    {asset.name}
+                  </h2>
+                  <p className="text-gray-400 text-sm mb-4">
+                    {asset.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-cyan-400">TokenID:</span>
+                      <span className="text-gray-300 font-mono">
+                        {asset.token_id}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-purple-400">Contract:</span>
+                      <span className="text-gray-300 font-mono truncate">
+                        {asset.contract_address}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-700/50">
+                  <span className="text-xs text-cyan-400 font-semibold">
+                    NFT
+                  </span>
+                </div>
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500 col-span-full">
-              No assets found for this wallet address.
-            </p>
+            <div className="col-span-full flex flex-col items-center justify-center gap-4 py-20">
+              <Wallet className="w-16 h-16 text-gray-600" />
+              <p className="text-gray-400 text-lg">
+                No digital assets found in this Wallet
+              </p>
+            </div>
           )}
         </div>
       </div>
     </div>
   );
 }
+
+export default Inventory;

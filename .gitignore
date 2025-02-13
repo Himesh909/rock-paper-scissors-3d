@@ -26,11 +26,4 @@ dist-ssr
 uploads
 
 .env
-app.py
-crud.py
-details.txt
-game_data.txt
-tst.py
-burn.py
-login.py
-pprof_crat.py
+back
